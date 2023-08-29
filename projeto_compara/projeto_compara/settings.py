@@ -80,7 +80,7 @@ DATABASES = {
     'NAME': 'comparador',
     'USER':'admin',
     'PASSWORD':'admin',
-    'HOST':'192.168.186.207',
+    'HOST':'192.168.188.248',
     'PORT':'3306',
     }
 }
