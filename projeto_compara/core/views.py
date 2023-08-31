@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import *
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 
@@ -70,3 +73,30 @@ def adicionar_precos(request, id):
             if float(preco_mercado) > 0:
                 produtos_mercados.objects.create(mercado=mercado, produto=produto, preco=preco_mercado)
     return redirect(lista_produtos)
+
+def cadastro(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        User.objects.create_user(username=username, password=password)
+        return redirect('cadastro')
+    return render(request, 'cadastro.html')
+
+def logar(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        usuario = authenticate(request, username=username, password=password)
+        if usuario is not None:
+            login(request, usuario)
+            return redirect(lista_produtos)
+        else:
+            form_login = AuthenticationForm()
+    else:
+        form_login = AuthenticationForm()
+    return render(request, 'login.html', {'form_login': form_login})
+
+def deslogar(request):
+    logout(request)
+    return redirect(logar)
+
