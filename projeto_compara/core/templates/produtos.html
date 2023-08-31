@@ -74,6 +74,7 @@
                         data-target="#modal{{produto.id}}">
                         Preços
                     </button>
+                    <a href="{% url 'tela_precos' produto.id %}" class="btn botao-cor-especial">Alterar preços</a>
 
                     <!-- Modal -->
                     <div class="modal fade" id="modal{{produto.id}}" tabindex="-1" role="dialog"
