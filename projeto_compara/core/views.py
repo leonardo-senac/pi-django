@@ -8,16 +8,9 @@ from django.contrib.auth.forms import AuthenticationForm
 
 def lista_produtos(request):
     produtos = Produto.objects.all().order_by('nome').values()
-    linhas=[]
-    linhas_temp=[]
-    for produto in produtos:
-        linhas_temp.append(produto)
-        if len(linhas_temp) % 4 == 0:
-            linhas.append(linhas_temp)
-            linhas_temp = []
     categorias = Categoria.objects.all()
     precos = produtos_mercados.objects.all().order_by('preco')
-    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'linhas': linhas})
+    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos})
 
 def cadastrar_produtos(request):
     nome_produto = request.POST.get('nome')
