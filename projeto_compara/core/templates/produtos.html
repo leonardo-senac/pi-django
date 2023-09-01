@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Comparador de Preços</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -18,55 +18,77 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        .card-largura {
-            max-width: 18rem;
+        /* Estilize os botões */
+        .btn-botao-cor-especial {
+            background-color: darkred;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
         }
 
-        img {
-            height: 300px;
+        .btn-botao-cor-especial:hover {
+            background-color: #990000;
+            /* Tom mais escuro para realçar o hover */
         }
 
-        .imagem-carrossel-um {
-            object-fit: cover;
-            object-position: 0 80%;
-            height: 400px;
+        /* Estilize a modal */
+        .modal-content {
+            background-color: #f8f8f8;
+            /* Cor de fundo da modal */
+            border-radius: 5px;
         }
 
-        .imagem-carrossel-dois {
-            object-fit: cover;
-            height: 400px;
-        }
-
-        .fonte-titulo {
+        .modal-title {
+            color: darkred;
+            /* Cor do título da modal */
             font-family: 'Pacifico', cursive;
         }
 
-        .cor-especial {
-            color: darkred;
+        /* Estilize a tabela de preços */
+        #tabela_precos tbody tr {
+            background-color: white;
+            /* Fundo branco para todas as linhas */
         }
 
-        .botao-cor-especial {
-            background-color: darkred;
-            color: white;
+        #tabela_precos tbody tr.verde {
+            background-color: #C8E6C9;
+            /* Fundo verde para a linha mais barata */
         }
 
-        .borda-cor-especial {
-            border-color: darkred;
+        /* Outras melhorias */
+        .card {
+            margin: 20px;
+            /* Espaçamento entre as cartas */
+            max-width: 18rem;
+            height: 500px;
         }
 
-        .card-posicao-imagem {
+        .card-img-top {
+            height: 300px;
             object-fit: cover;
-            height: 200px;
         }
 
-        .modal-body p:first-child{
-            background-color: green;
+        .card-body {
+            position: relative;
+            padding: 1rem;
         }
 
-        .modal-body p:nth-child(2), .modal-body p:nth-child(3){
-            background-color: red;
+        .btn-precos {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
         }
+
+        .modal-dialog {
+            max-width: 800px;
+        }
+
+        /* Personalize ainda mais de acordo com suas preferências de design */
     </style>
 </head>
 
@@ -79,16 +101,17 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExample07">
-
                 <form class="form-inline my-2 my-md-0">
-                    <input class="form-control" type="text" onkeyup="search_product()" placeholder="Pesquisa" aria-label="Search" id="pesquisa">
+                    <input class="form-control" type="text" onkeyup="search_product()" placeholder="Pesquisa"
+                        aria-label="Search" id="pesquisa">
                 </form>
             </div>
         </div>
         {% if usuario.is_authenticated %}
-        <a href="{% url 'deslogar' %}" class="btn botao-cor-especial">Deslogar</a>
+        <a href="{% url 'adicionar_produto' %}" class="btn btn-botao-cor-especial">Adicionar Produto</a>
+        <a href="{% url 'deslogar' %}" class="btn btn-botao-cor-especial">Deslogar</a>
         {% else %}
-        <a href="{% url 'logar' %}" class="btn botao-cor-especial">Logar</a>
+        <a href="{% url 'logar' %}" class="btn btn-botao-cor-especial">Logar</a>
         {% endif %}
     </nav>
     <div>
@@ -96,7 +119,8 @@
     <div class="card-group">
         <div class="row">
             {% for produto in produtos %}
-            <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4" style="width: 18rem; height: 500px;">
+            <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4"
+                style="width: 18rem; height: 500px;">
                 <img class="card-img-top" src="{{produto.imagem}}" alt="Imagem de {{produto.nome}}">
                 <div class="card-body">
                     <h5 class="card-title">{{produto.nome}}</h5>
@@ -105,12 +129,13 @@
                     {% endif %}
                     <!-- Botão para acionar modal -->
                     <div style="position: absolute; bottom: 10px;">
-                        <button type="button" class="btn botao-cor-especial" data-toggle="modal"
+                        <button type="button" class="btn btn-botao-cor-especial" data-toggle="modal"
                             data-target="#modal{{produto.id}}">
                             Preços
                         </button>
                         {% if usuario.is_authenticated %}
-                        <a href="{% url 'tela_precos' produto.id %}" class="btn botao-cor-especial">Alterar preços</a>
+                        <a href="{% url 'tela_precos' produto.id %}" class="btn btn-botao-cor-especial">Alterar
+                            preços</a>
                         {% endif %}
                     </div>
 
@@ -123,15 +148,18 @@
                                     <h5 class="modal-title" id="exampleModalLabel">{{produto.nome}}</h5>
                                 </div>
                                 <div class="modal-body">
-                                    <precos>
-                                    {% for preco in precos %}
-                                    {% for linha in preco %}
-                                    {% if linha.produto == produto %}
-                                    <p>{{linha.mercado.nome}} // {{linha.preco}}</p>
-                                    {% endif %}
-                                    {% endfor %}
-                                    {% endfor %}
-                                    </precos>
+                                    <table class="table" id="tabela_precos">
+                                        {% for preco in precos %}
+                                        {% for linha in preco %}
+                                        {% if linha.produto == produto %}
+                                        <tr class="{% if linha.preco == produto.preco_mais_barato %}verde{% endif %}">
+                                            <td>{{linha.mercado.nome}}</td>
+                                            <td>{{linha.preco}}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </table>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -161,6 +189,12 @@
                 }
             }
         }
+        $(document).ready(function () {
+
+            $('#tabela_precos tbody tr:first-child').addClass('table-success')
+            $('#tabela_precos tbody tr:nth-child(2)').addClass('table-success')
+            $('#tabela_precos tbody tr:nth-child(3)').addClass('table-success')
+        })
     </script>
 </body>
 

@@ -31,4 +31,5 @@ urlpatterns = [
     path('cadastro/', cadastro, name='cadastro'),
     path('logar/', logar, name="logar"),
     path('deslogar', deslogar, name="deslogar"),
+    path('adicionar_produto', adicionar_produto, name="adicionar_produto"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

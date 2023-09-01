@@ -98,3 +98,6 @@ def deslogar(request):
     logout(request)
     return redirect(lista_produtos)
 
+def adicionar_produto(request):
+    return redirect(lista_produtos)
+
