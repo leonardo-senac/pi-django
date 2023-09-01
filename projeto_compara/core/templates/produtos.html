@@ -23,6 +23,10 @@
             max-width: 18rem;
         }
 
+        img {
+            height: 300px;
+        }
+
         .imagem-carrossel-um {
             object-fit: cover;
             object-position: 0 80%;
@@ -55,10 +59,40 @@
             object-fit: cover;
             height: 200px;
         }
+
+        .modal-body p:first-child{
+            background-color: green;
+        }
+
+        .modal-body p:nth-child(2), .modal-body p:nth-child(3){
+            background-color: red;
+        }
     </style>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
+                aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample07">
+
+                <form class="form-inline my-2 my-md-0">
+                    <input class="form-control" type="text" onkeyup="search_product()" placeholder="Pesquisa" aria-label="Search" id="pesquisa">
+                </form>
+            </div>
+        </div>
+        {% if usuario.is_authenticated %}
+        <a href="{% url 'deslogar' %}" class="btn botao-cor-especial">Deslogar</a>
+        {% else %}
+        <a href="{% url 'logar' %}" class="btn botao-cor-especial">Logar</a>
+        {% endif %}
+    </nav>
+    <div>
+    </div>
     <div class="card-group">
         <div class="row">
             {% for produto in produtos %}
@@ -74,7 +108,9 @@
                         data-target="#modal{{produto.id}}">
                         Preços
                     </button>
+                    {% if usuario.is_authenticated %}
                     <a href="{% url 'tela_precos' produto.id %}" class="btn botao-cor-especial">Alterar preços</a>
+                    {% endif %}
 
                     <!-- Modal -->
                     <div class="modal fade" id="modal{{produto.id}}" tabindex="-1" role="dialog"
@@ -85,11 +121,15 @@
                                     <h5 class="modal-title" id="exampleModalLabel">{{produto.nome}}</h5>
                                 </div>
                                 <div class="modal-body">
+                                    <precos>
                                     {% for preco in precos %}
-                                    {% if preco.produto.id == produto.id %}
-                                    <p>{{preco.mercado}} // {{preco.preco}}</p>
+                                    {% for linha in preco %}
+                                    {% if linha.produto == produto %}
+                                    <p>{{linha.mercado.nome}} // {{linha.preco}}</p>
                                     {% endif %}
                                     {% endfor %}
+                                    {% endfor %}
+                                    </precos>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -102,6 +142,24 @@
             {% endfor %}
         </div>
     </div>
+
+    <script>
+        // JavaScript code
+        function search_product() {
+            let input = document.getElementById('pesquisa').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('produtos');
+
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    x[i].style.display = "none";
+                }
+                else {
+                    x[i].style.display = "flex";
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -7,10 +7,15 @@ from django.contrib.auth.forms import AuthenticationForm
 # Create your views here.
 
 def lista_produtos(request):
-    produtos = Produto.objects.all().order_by('nome').values()
+    produtos = Produto.objects.all().order_by('nome')
     categorias = Categoria.objects.all()
-    precos = produtos_mercados.objects.all().order_by('preco')
-    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos})
+    # precos = produtos_mercados.objects.all().order_by('preco')
+    precos = []
+    for produto in produtos:
+        preco_produto = produtos_mercados.objects.filter(produto=produto).order_by('preco')
+        precos.append(preco_produto)
+    usuario = request.user
+    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario})
 
 def cadastrar_produtos(request):
     nome_produto = request.POST.get('nome')
@@ -91,5 +96,5 @@ def logar(request):
 
 def deslogar(request):
     logout(request)
-    return redirect(logar)
+    return redirect(lista_produtos)
 
