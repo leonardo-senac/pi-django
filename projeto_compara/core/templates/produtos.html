@@ -96,7 +96,7 @@
     <div class="card-group">
         <div class="row">
             {% for produto in produtos %}
-            <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4" style="width: 18rem;">
+            <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4" style="width: 18rem; height: 500px;">
                 <img class="card-img-top" src="{{produto.imagem}}" alt="Imagem de {{produto.nome}}">
                 <div class="card-body">
                     <h5 class="card-title">{{produto.nome}}</h5>
@@ -104,13 +104,15 @@
                     <p class="card-text">{{produto.descricao}}</p>
                     {% endif %}
                     <!-- Botão para acionar modal -->
-                    <button type="button" class="btn botao-cor-especial" data-toggle="modal"
-                        data-target="#modal{{produto.id}}">
-                        Preços
-                    </button>
-                    {% if usuario.is_authenticated %}
-                    <a href="{% url 'tela_precos' produto.id %}" class="btn botao-cor-especial">Alterar preços</a>
-                    {% endif %}
+                    <div style="position: absolute; bottom: 10px;">
+                        <button type="button" class="btn botao-cor-especial" data-toggle="modal"
+                            data-target="#modal{{produto.id}}">
+                            Preços
+                        </button>
+                        {% if usuario.is_authenticated %}
+                        <a href="{% url 'tela_precos' produto.id %}" class="btn botao-cor-especial">Alterar preços</a>
+                        {% endif %}
+                    </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="modal{{produto.id}}" tabindex="-1" role="dialog"
