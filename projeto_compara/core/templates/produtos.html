@@ -20,7 +20,7 @@
         crossorigin="anonymous"></script>
     <style>
         .card-largura {
-            max-width: 18rem;
+            max-width: 20rem;
         }
 
         img {
@@ -60,17 +60,65 @@
             height: 200px;
         }
 
-        .modal-body p:first-child{
+        .modal-body p:first-child {
             background-color: green;
         }
 
-        .modal-body p:nth-child(2), .modal-body p:nth-child(3){
+        .modal-body p:nth-child(2),
+        .modal-body p:nth-child(3) {
             background-color: red;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos para a barra de navegação lateral */
+        .sidebar {
+            height: 80%;
+            width: 100px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #0935e6d3;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Estilos para o conteúdo principal */
+        .content {
+            margin-left: 200px;
+            /* Largura da barra de navegação lateral */
+            padding: 20px;
         }
     </style>
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
@@ -81,7 +129,8 @@
             <div class="collapse navbar-collapse" id="navbarsExample07">
 
                 <form class="form-inline my-2 my-md-0">
-                    <input class="form-control" type="text" onkeyup="search_product()" placeholder="Pesquisa" aria-label="Search" id="pesquisa">
+                    <input class="form-control" type="text" onkeyup="search_product()" placeholder="Pesquisa"
+                        aria-label="Search" id="pesquisa">
                 </form>
             </div>
         </div>
@@ -91,59 +140,75 @@
         <a href="{% url 'logar' %}" class="btn botao-cor-especial">Logar</a>
         {% endif %}
     </nav>
-    <div>
-    </div>
-    <div class="card-group">
-        <div class="row">
-            {% for produto in produtos %}
-            <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4" style="width: 18rem; height: 500px;">
-                <img class="card-img-top" src="{{produto.imagem}}" alt="Imagem de {{produto.nome}}">
-                <div class="card-body">
-                    <h5 class="card-title">{{produto.nome}}</h5>
-                    {% if produto.descricao != None %}
-                    <p class="card-text">{{produto.descricao}}</p>
-                    {% endif %}
-                    <!-- Botão para acionar modal -->
-                    <div style="position: absolute; bottom: 10px;">
-                        <button type="button" class="btn botao-cor-especial" data-toggle="modal"
-                            data-target="#modal{{produto.id}}">
-                            Preços
-                        </button>
-                        {% if usuario.is_authenticated %}
-                        <a href="{% url 'tela_precos' produto.id %}" class="btn botao-cor-especial">Alterar preços</a>
-                        {% endif %}
-                    </div>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="modal{{produto.id}}" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{produto.nome}}</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <precos>
-                                    {% for preco in precos %}
-                                    {% for linha in preco %}
-                                    {% if linha.produto == produto %}
-                                    <p>{{linha.mercado.nome}} // {{linha.preco}}</p>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <!-- Adicionar as categorias aqui -->
+                    </ul>
+                    <hr>
+                </div>
+            </div>
+            <div class="col py-3">
+                <div class="card-group">
+                    <div class="row">
+                        {% for produto in produtos %}
+                        <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4"
+                            style="width: 18rem; height: 500px;">
+                            <img class="card-img-top" src="{{produto.imagem}}" alt="Imagem de {{produto.nome}}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{produto.nome}}</h5>
+                                {% if produto.descricao != None %}
+                                <p class="card-text">{{produto.descricao}}</p>
+                                {% endif %}
+                                <!-- Botão para acionar modal -->
+                                <div style="position: absolute; bottom: 10px;">
+                                    <button type="button" class="btn botao-cor-especial" data-toggle="modal"
+                                        data-target="#modal{{produto.id}}">
+                                        Preços
+                                    </button>
+                                    {% if usuario.is_authenticated %}
+                                    <a href="{% url 'tela_precos' produto.id %}" class="btn botao-cor-especial">Alterar
+                                        preços</a>
                                     {% endif %}
-                                    {% endfor %}
-                                    {% endfor %}
-                                    </precos>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal{{produto.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">{{produto.nome}}</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <precos>
+                                                    {% for preco in precos %}
+                                                    {% for linha in preco %}
+                                                    {% if linha.produto == produto %}
+                                                    <p>{{linha.mercado.nome}} // {{linha.preco}}</p>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    {% endfor %}
+                                                </precos>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
     </div>
+    
 
     <script>
         // JavaScript code
