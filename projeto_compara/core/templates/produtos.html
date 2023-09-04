@@ -43,22 +43,49 @@
             border-radius: 5px;
         }
 
-        .modal-title {
-            color: darkred;
-            /* Cor do título da modal */
-            font-family: 'Pacifico', cursive;
-        }
+        /* Estilize a modal */
+.modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
 
-        /* Estilize a tabela de preços */
-        #tabela_precos tbody tr {
-            background-color: white;
-            /* Fundo branco para todas as linhas */
-        }
+.modal-title {
+    color: darkred;
+    font-family: 'Geneva', sans-serif;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
 
-        #tabela_precos tbody tr.verde {
-            background-color: #C8E6C9;
-            /* Fundo verde para a linha mais barata */
-        }
+/* Estilize a tabela de preços */
+#tabela_precos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabela_precos thead {
+    background-color: #f8f8f8;
+    border-bottom: 2px solid darkred;
+}
+
+#tabela_precos th,
+#tabela_precos td {
+    padding: 10px;
+    text-align: center;
+}
+
+#tabela_precos tbody tr {
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+#tabela_precos tbody tr.verde {
+    background-color: #C8E6C9;
+}
+
+#tabela_precos tbody tr:hover {
+    background-color: #f2f2f2;
+}
 
         /* Outras melhorias */
         .card {
@@ -89,7 +116,6 @@
             max-width: 800px;
         }
 
-        /* Personalize ainda mais de acordo com suas preferências de design */
     </style>
 </head>
 
