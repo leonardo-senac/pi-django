@@ -53,12 +53,13 @@ def tela_precos(request, id):
     mercados = Mercado.objects.all()
     mercados_produtos = produtos_mercados.objects.filter(produto = produto)
     sessoes = Sessão.objects.all()
+    usuario = request.user
     precificados = []
     for linha in mercados_produtos:
         precificados.append(linha.mercado)
         linha.preco = float(linha.preco)
 
-    return render(request, 'precos.html', {'produto': produto, 'mercados': mercados, 'mercados_produtos': mercados_produtos, 'precificados': precificados, 'sessoes': sessoes})
+    return render(request, 'precos.html', {'produto': produto, 'mercados': mercados, 'mercados_produtos': mercados_produtos, 'precificados': precificados, 'sessoes': sessoes, 'usuario': usuario})
 
 def adicionar_precos(request, id):
     mercados = Mercado.objects.all()
