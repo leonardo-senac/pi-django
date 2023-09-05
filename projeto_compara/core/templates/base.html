@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Comparador de Preços</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* Estilize os botões */
+        .btn-botao-cor-especial {
+            background-color: darkred;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-botao-cor-especial:hover {
+            background-color: #990000;
+            color: white;
+            /* Tom mais escuro para realçar o hover */
+        }
+
+        /* Estilize a modal */
+        .modal-content {
+            background-color: #f8f8f8;
+            /* Cor de fundo da modal */
+            border-radius: 5px;
+        }
+
+        /* Estilize a modal */
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-title {
+            color: darkred;
+            font-family: 'Geneva', sans-serif;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        /* Estilize a tabela de preços */
+        #tabela_precos {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #tabela_precos thead {
+            background-color: #f8f8f8;
+            border-bottom: 2px solid darkred;
+        }
+
+        #tabela_precos th,
+        #tabela_precos td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        #tabela_precos tbody tr {
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        #tabela_precos tbody tr.verde {
+            background-color: #C8E6C9;
+        }
+
+        #tabela_precos tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* Outras melhorias */
+        .card {
+            margin: 20px;
+            /* Espaçamento entre as cartas */
+            max-width: 18rem;
+            height: 500px;
+        }
+
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            position: relative;
+            padding: 1rem;
+        }
+
+        .btn-precos {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .modal-dialog {
+            max-width: 800px;
+        }
+    </style>
+    <style>
+        .class-body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .class-container {
+            background-color: #e7e7e7;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .class-h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .class-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .class-input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .class-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .class-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
+                aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample07">
+                <form class="form-inline my-2 my-md-0">
+                    <input class="form-control" type="text" onkeyup="search_product()" placeholder="Pesquisa"
+                        aria-label="Search" id="pesquisa">
+                </form>
+            </div>
+        </div>
+        {% if usuario.is_authenticated %}
+        <a href="{% url 'adicionar_produto' %}" class="btn btn-botao-cor-especial">Adicionar Produto</a>
+        <a href="{% url 'deslogar' %}" class="btn btn-botao-cor-especial" style="margin-left: 10px;">Deslogar</a>
+        {% else %}
+        <a href="{% url 'logar' %}" class="btn btn-botao-cor-especial">Logar</a>
+        {% endif %}
+    </nav>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
+                        {% for sessao in sessoes %}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <span class="ms-1 d-none d-sm-inline">{{sessao.nome}}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <hr>
+                </div>
+            </div>
+            <div class="col py-3">
+                {% block conteudo %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

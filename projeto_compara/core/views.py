@@ -9,13 +9,14 @@ from django.contrib.auth.forms import AuthenticationForm
 def lista_produtos(request):
     produtos = Produto.objects.all().order_by('nome')
     categorias = Categoria.objects.all()
+    sessoes = Sessão.objects.all()
     # precos = produtos_mercados.objects.all().order_by('preco')
     precos = []
     for produto in produtos:
         preco_produto = produtos_mercados.objects.filter(produto=produto).order_by('preco')
         precos.append(preco_produto)
     usuario = request.user
-    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario})
+    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
 
 def cadastrar_produtos(request):
     nome_produto = request.POST.get('nome')
@@ -51,12 +52,13 @@ def tela_precos(request, id):
     produto = Produto.objects.get(id=id)
     mercados = Mercado.objects.all()
     mercados_produtos = produtos_mercados.objects.filter(produto = produto)
+    sessoes = Sessão.objects.all()
     precificados = []
     for linha in mercados_produtos:
         precificados.append(linha.mercado)
         linha.preco = float(linha.preco)
 
-    return render(request, 'precos.html', {'produto': produto, 'mercados': mercados, 'mercados_produtos': mercados_produtos, 'precificados': precificados})
+    return render(request, 'precos.html', {'produto': produto, 'mercados': mercados, 'mercados_produtos': mercados_produtos, 'precificados': precificados, 'sessoes': sessoes})
 
 def adicionar_precos(request, id):
     mercados = Mercado.objects.all()
