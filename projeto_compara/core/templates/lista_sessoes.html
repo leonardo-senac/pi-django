@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Cabeçalho e imports necessários -->
+</head>
+<body>
+    <h1>Lista de Sessões</h1>
+    
+    <!-- Lista as sessões existentes -->
+    <ul>
+        {% for sessao in sessoes %}
+            <li>{{ sessao.nome }} - <a href="{% url 'editar_sessao' sessao.id %}">Editar</a> | <a href="{% url 'excluir_sessao' sessao.id %}">Excluir</a></li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Formulário para adicionar sessões -->
+    <form method="post" action="{% url 'adicionar_sessao' %}">
+        {% csrf_token %}
+        <label for="nome">Nome da Sessão:</label>
+        <input type="text" id="nome" name="nome">
+        <input type="submit" value="Adicionar">
+    </form>
+</body>
+</html>
