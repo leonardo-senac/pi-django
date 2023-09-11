@@ -22,7 +22,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lista_produtos),
+    path('', lista_produtos, name=''),
     path('cadastrar_produtos/', cadastrar_produtos, name="cadastrar_produtos"),
     path('mercados/', lista_mercados),
     path('cadastrar_mercados/', cadastrar_mercados, name="cadastrar_mercados"),
@@ -32,4 +32,5 @@ urlpatterns = [
     path('logar/', logar, name="logar"),
     path('deslogar', deslogar, name="deslogar"),
     path('adicionar_produto', adicionar_produto, name="adicionar_produto"),
+    path('produtos_por_sessao/<int:id_sessao>/', produtos_por_sessao, name='produtos_por_sessao')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
