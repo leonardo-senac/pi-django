@@ -32,5 +32,5 @@ urlpatterns = [
     path('logar/', logar, name="logar"),
     path('deslogar', deslogar, name="deslogar"),
     path('adicionar_produto', adicionar_produto, name="adicionar_produto"),
-    path('produtos_por_sessao/<int:id_sessao>/', produtos_por_sessao, name='produtos_por_sessao')
+    path('produtos_por_sessao/<int:id_sessao>/', produtos_por_sessao, name='produtos_por_sessao'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
