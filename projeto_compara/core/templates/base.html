@@ -191,10 +191,6 @@
             </div>
         </div>
         {% if usuario.is_authenticated %}
-        <a href="{% url 'cadastrar_produtos' %}" class="btn btn-botao-cor-especial">Adicionar Produto</a>
-        <a href="{% url 'deslogar' %}" class="btn btn-botao-cor-especial" style="margin-left: 10px;">Deslogar</a>
-        <!--<a href="{% url 'adicionar_produto' %}" class="btn btn-botao-cor-especial">Adicionar Produto</a> -->
-        <!-- <a href="{% url 'deslogar' %}" class="btn btn-botao-cor-especial" style="margin-left: 10px;">Deslogar</a> -->
         <div class="dropdown">
             <a class="btn btn-botao-cor-especial dropdown-toggle" style="margin-left: 10px;" href="#" role="button"
                 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -202,10 +198,10 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a href="{% url 'cadastrar_produtos' %}" class="dropdown-item" href="#">Adicionar Produto</a>
-                <a  class="dropdown-item" href="#">Outra ação</a>
-                <a class="dropdown-item" href="#">Alguma coisa aqui</a>
-                <div class="dropdown-divider"></div>
+                <a href="{% url 'cadastrar_produtos' %}" class="dropdown-item" >Adicionar Produto</a>
+                <a href="{% url 'adicionar_categoria' %}" class="dropdown-item" >Menu Categorias</a>
+                <a href="{% url 'cadastro_sessoes' %}" class="dropdown-item">Menu Sessões</a>
+    <div class="dropdown-divider"></div>
                 <a href="{% url 'deslogar' %}" class="dropdown-item">Deslogar</a>
             </div>
         </div>
