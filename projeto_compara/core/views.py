@@ -18,14 +18,17 @@ def lista_produtos(request):
     return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
 
 def cadastrar_produtos(request):
-    nome_produto = request.POST.get('nome')
-    produto_descricao = request.POST.get('descricao')
-    id_categoria = request.POST.get('categoria')
+    sessoes = Sessão.objects.all()
+    categorias = Categoria.objects.all()
+    if request.method == 'POST':
+        nome_produto = request.POST.get('nome')
+        produto_descricao = request.POST.get('descricao')
+        id_categoria = request.POST.get('categoria')
 
-    produto_categoria = Categoria.objects.get(id=id_categoria)
+        produto_categoria = Categoria.objects.get(id=id_categoria)
 
-    Produto.objects.create(nome= nome_produto, descricao=produto_descricao, categoria=produto_categoria)
-    return redirect(lista_produtos)
+        Produto.objects.create(nome= nome_produto, descricao=produto_descricao, categoria=produto_categoria)
+    return render(request, 'cadastro_produto.html', {'sessoes': sessoes, 'categorias': categorias})
 
 def lista_mercados(request):
     mercados = Mercado.objects.all()
@@ -115,11 +118,10 @@ def deslogar(request):
     logout(request)
     return redirect(lista_produtos)
 
-def adicionar_produto(request):
-    return redirect(lista_produtos)
-
 def lista_sessoes(request):
     # Recupere todas as sessões do banco de dados
     sessoes = Sessão.objects.all()
     return render(request, 'lista_sessoes.html', {'sessoes': sessoes})
+
+
 

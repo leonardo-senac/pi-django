@@ -191,7 +191,7 @@
             </div>
         </div>
         {% if usuario.is_authenticated %}
-        <a href="{% url 'adicionar_produto' %}" class="btn btn-botao-cor-especial">Adicionar Produto</a>
+        <a href="{% url 'cadastrar_produtos' %}" class="btn btn-botao-cor-especial">Adicionar Produto</a>
         <a href="{% url 'deslogar' %}" class="btn btn-botao-cor-especial" style="margin-left: 10px;">Deslogar</a>
         {% else %}
         <a href="{% url 'logar' %}" class="btn btn-botao-cor-especial">Logar</a>
