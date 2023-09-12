@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    {% block conteudo %}
+    <form action="{% url 'cadastro_sessoes' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="nome">
+        <button type="submit">Salvar</button>
+    </form>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th></th>
+        </tr>
+        {% for sessao in sessoes %}
+        <tr>
+            <td>{{sessao.id}}</td>
+            <td>{{sessao.nome}}</td>
+            <td><a href="{% url 'excluir_sessoes' sessao.id %}" class="btn btn-danger">Excluir</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
+</body>
+</html>

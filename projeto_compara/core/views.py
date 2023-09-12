@@ -17,6 +17,13 @@ def lista_produtos(request):
     usuario = request.user
     return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
 
+def cadastro_sessoes(request):
+    sessoes = Sessão.objects.all()
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        Sessão.objects.create(nome=nome)
+    return render(request, 'cadastro_sessoes.html', {'sessoes': sessoes})
+
 def cadastrar_produtos(request):
     nome_produto = request.POST.get('nome')
     produto_descricao = request.POST.get('descricao')
@@ -136,3 +143,9 @@ def excluir_categoria(request, id_categoria):
     categoria = Categoria.objects.get(id=id_categoria)
     categoria.delete()
     return redirect(adicionar_categoria)
+def excluir_sessoes(request, id_sessoes):
+      sessoes =  Sessão.objects.get(id=id_sessoes)
+
+      sessoes.delete()
+
+      return redirect(cadastro_sessoes)
