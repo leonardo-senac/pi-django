@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
+{% extends 'base.html' %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    {% block conteudo %}
     <table class="table">
         <tr>
             <th>Nome</th>
@@ -34,8 +35,9 @@
             <option value="{{cidade.id}}">{{cidade.nome}}</option>
             {%endfor%}
         </select>
-
+        
         <button type="submit" class="btn btn-primary">Salvar</button>
+        {% endblock %}
     </form>
 
 </body>

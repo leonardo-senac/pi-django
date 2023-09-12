@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 {% extends 'base.html' %}
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +14,8 @@
     <div class="card-group">
         <div class="row">
             {% for produto in produtos %}
-            <div class="produtos card borda-cor-especial card-largura p-0 m-4 col-12 col-md-4"
-                style="width: 18rem; height: 500px;">
-                <img class="card-img-top" src="{{produto.imagem}}" alt="Imagem de {{produto.nome}}">
+            <div class="produtos card borda-cor-especial" style="height: 500px;">
+                <img class="card-img-top" src="{{produto.imagem.url}}" alt="Imagem de {{produto.nome}}">
                 <div class="card-body">
                     <h5 class="card-title">{{produto.nome}}</h5>
                     {% if produto.descricao != None %}
@@ -44,7 +45,7 @@
                                     <table class="table" id="tabela_precos">
                                         {% for preco in precos %}
                                         {% for linha in preco %}
-                                        {% if linha.produto == produto %}
+                                        {% if linha.produto == produto and linha.preco > 0 %}
                                         <tr class="{% if linha.preco == produto.preco_mais_barato %}verde{% endif %}">
                                             <td>{{linha.mercado.nome}}</td>
                                             <td>{{linha.preco}}</td>
@@ -66,32 +67,6 @@
         </div>
     </div>
     {% endblock %}
-
-
-
-    <script>
-        // JavaScript code
-        function search_product() {
-            let input = document.getElementById('pesquisa').value
-            input = input.toLowerCase();
-            let x = document.getElementsByClassName('produtos');
-
-            for (i = 0; i < x.length; i++) {
-                if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                    x[i].style.display = "none";
-                }
-                else {
-                    x[i].style.display = "flex";
-                }
-            }
-        }
-        $(document).ready(function () {
-
-            $('#tabela_precos tbody tr:first-child').addClass('table-success')
-            $('#tabela_precos tbody tr:nth-child(2)').addClass('table-success')
-            $('#tabela_precos tbody tr:nth-child(3)').addClass('table-success')
-        })
-    </script>
 </body>
 
 </html>

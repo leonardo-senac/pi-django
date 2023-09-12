@@ -10,7 +10,6 @@ def lista_produtos(request):
     produtos = Produto.objects.all().order_by('nome')
     categorias = Categoria.objects.all()
     sessoes = Sessão.objects.all()
-    # precos = produtos_mercados.objects.all().order_by('preco')
     precos = []
     for produto in produtos:
         preco_produto = produtos_mercados.objects.filter(produto=produto).order_by('preco')
@@ -31,9 +30,24 @@ def cadastrar_produtos(request):
 def lista_mercados(request):
     mercados = Mercado.objects.all()
     cidades = Cidade.objects.all()
+    sessoes = Sessão.objects.all()
     # rua = Mercado.object.all()
     # cidade = Mercado.objects.all()
-    return render(request, 'mercados.html', {'mercados': mercados, 'cidades': cidades})
+    return render(request, 'mercados.html', {'mercados': mercados, 'cidades': cidades, 'sessoes': sessoes})
+
+
+def produtos_por_sessao(request, id_sessao):
+    sessao = Sessão.objects.get(id=id_sessao)
+    produtos = Produto.objects.filter(categoria__sessao=sessao).order_by('nome')
+    categorias = Categoria.objects.all()
+    sessoes = Sessão.objects.all()
+    precos = []
+    for produto in produtos:
+        preco_produto = produtos_mercados.objects.filter(produto=produto).order_by('preco')
+        precos.append(preco_produto)
+    usuario = request.user
+    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
+
 
 def cadastrar_mercados(request):
     nome_mercado = request.POST.get('nome')
@@ -103,4 +117,9 @@ def deslogar(request):
 
 def adicionar_produto(request):
     return redirect(lista_produtos)
+
+def lista_sessoes(request):
+    # Recupere todas as sessões do banco de dados
+    sessoes = Sessão.objects.all()
+    return render(request, 'lista_sessoes.html', {'sessoes': sessoes})
 

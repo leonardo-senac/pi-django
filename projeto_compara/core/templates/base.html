@@ -206,7 +206,7 @@
                         id="menu">
                         {% for sessao in sessoes %}
                         <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0">
+                            <a href="{% url 'produtos_por_sessao' sessao.id %}" class="nav-link align-middle px-0">
                                 <span class="ms-1 d-none d-sm-inline">{{sessao.nome}}</span>
                             </a>
                         </li>
@@ -221,6 +221,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // JavaScript code
+        function search_product() {
+            let input = document.getElementById('pesquisa').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('produtos');
+
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    x[i].style.display = "none";
+                }
+                else {
+                    x[i].style.display = "flex";
+                }
+            }
+        }
+        $(document).ready(function () {
+
+            $('#tabela_precos tbody tr:first-child').addClass('table-success')
+            $('#tabela_precos tbody tr:nth-child(2)').addClass('table-success')
+            $('#tabela_precos tbody tr:nth-child(3)').addClass('table-success')
+        })
+    </script>
 </body>
 
 </html>
