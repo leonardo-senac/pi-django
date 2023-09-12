@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt">
 {% extends 'base.html' %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +26,8 @@
             width: 100%;
             max-width: 500px;
             text-align: center;
-            border: 1px solid #ccc; /* Adicione esta linha para a borda */
+            border: 1px solid #ccc;
+            /* Adicione esta linha para a borda */
         }
 
         h1 {
@@ -51,7 +53,8 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
-            outline: none; /* Adicione esta linha para remover a borda azul ao clicar nos campos */
+            outline: none;
+            /* Adicione esta linha para remover a borda azul ao clicar nos campos */
         }
 
         input[type="file"] {
@@ -95,32 +98,55 @@
 
         <form method="post" action="{% url 'cadastrar_produtos' %}">
             {% csrf_token %}
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">Nome do produto</span>
+                </div>
+                <input type="text" class="form-control" name="nome">
+            </div>
+            <br>
             <div class="form-group">
-                <label for="nome">Nome do Produto:</label>
-                <input type="text" id="nome" name="nome" required>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="">First and last name</span>
+                    </div>
+                    <textarea type="text" name="descricao" rows="4" cols="50" class="form-control"></textarea>
+                </div>
+                <!-- <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="4" cols="50"></textarea> -->
             </div>
 
-            <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <textarea id="descricao" name="descricao" rows="4" cols="50"></textarea>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" name="categoria">
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
             </div>
-
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="categoria">Categoria:</label>
                 <select id="categoria" name="categoria">
                     {% for categoria in categorias %}
                     <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
                     {% endfor %}
                 </select>
-            </div>
+            </div> -->
 
-            <div class="form-group">
-                <label for="imagem">Imagem:</label>
-                <input type="file" id="imagem" name="imagem">
-            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Imagem</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="imagem">
+                  <label class="custom-file-label" for="inputGroupFile01">Escolha uma imagem</label>
+                </div>
+              </div>
 
             <div classs="form-group">
-                <button class="btn-primary" type="submit">Cadastrar Produto</button>
+                <button class="btn btn-primary" type="submit">Cadastrar Produto</button>
             </div>
         </form>
 

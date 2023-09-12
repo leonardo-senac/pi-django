@@ -32,7 +32,6 @@ urlpatterns = [
     path('logar/', logar, name="logar"),
     path('deslogar', deslogar, name="deslogar"),
     path('produtos_por_sessao/<int:id_sessao>/', produtos_por_sessao, name='produtos_por_sessao'),
-
     path('adicionar_categoria/', adicionar_categoria, name="adicionar_categoria"),
     path('excluir_categoria/<int:id_categoria>/', excluir_categoria, name="excluir_categoria"),
     path('cadastro_sessoes/', cadastro_sessoes, name='cadastro_sessoes'),
