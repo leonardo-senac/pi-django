@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>categoria</title>
+</head>
+
+<body>
+    {% block conteudo %}
+    <form action="{% url 'adicionar_categoria' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="nome">
+        <select name="sessao">
+            {% for sessao in sessoes %}
+            <option value="{{sessao.id}}">{{sessao.nome}}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Salvar</button>
+    </form>
+    <table class="table">
+        <tr>
+            <th>Categoria</th>
+            <th>Sessão</th>
+            <th></th>
+        </tr>
+        {% for categoria in categorias %}
+        <tr>
+            <td>{{categoria.nome}}</td>
+            <td>{{categoria.sessao}}</td>
+            <td><a href="{% url 'excluir_categoria' categoria.id %}" class="btn btn-danger">Excluir</a></td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
+
+</body>
+
+</html>

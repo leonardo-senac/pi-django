@@ -118,8 +118,24 @@ def deslogar(request):
 def adicionar_produto(request):
     return redirect(lista_produtos)
 
+<<<<<<< Updated upstream
 def lista_sessoes(request):
     # Recupere todas as sessões do banco de dados
     sessoes = Sessão.objects.all()
     return render(request, 'lista_sessoes.html', {'sessoes': sessoes})
 
+=======
+def adicionar_categoria(request):
+    categorias = Categoria.objects.all()
+    sessoes = Sessão.objects.all()
+    if request.method == 'POST':
+        nome = request.POST['nome']
+        sessao = Sessão.objects.get(id=request.POST['sessao'])
+        Categoria.objects.create(nome=nome, sessao=sessao)
+    return render(request, 'categoria.html', {"categorias": categorias, 'sessoes': sessoes})    
+
+def excluir_categoria(request, id_categoria):
+    categoria = Categoria.objects.get(id=id_categoria)
+    categoria.delete()
+    return redirect(adicionar_categoria)
+>>>>>>> Stashed changes
