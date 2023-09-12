@@ -118,3 +118,8 @@ def deslogar(request):
 def adicionar_produto(request):
     return redirect(lista_produtos)
 
+def lista_sessoes(request):
+    # Recupere todas as sessões do banco de dados
+    sessoes = Sessão.objects.all()
+    return render(request, 'lista_sessoes.html', {'sessoes': sessoes})
+
