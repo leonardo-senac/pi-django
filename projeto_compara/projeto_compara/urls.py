@@ -32,10 +32,7 @@ urlpatterns = [
     path('logar/', logar, name="logar"),
     path('deslogar', deslogar, name="deslogar"),
     path('adicionar_produto', adicionar_produto, name="adicionar_produto"),
-<<<<<<< Updated upstream
     path('produtos_por_sessao/<int:id_sessao>/', produtos_por_sessao, name='produtos_por_sessao'),
-=======
     path('adicionar_categoria/', adicionar_categoria, name="adicionar_categoria"),
     path('excluir_categoria/<int:id_categoria>/', excluir_categoria, name="excluir_categoria")
->>>>>>> Stashed changes
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
