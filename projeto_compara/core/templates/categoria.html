@@ -10,16 +10,28 @@
 
 <body>
     {% block conteudo %}
-    <form action="{% url 'adicionar_categoria' %}" method="post">
+    <form action="{% url 'adicionar_categoria' %}" method="post" class="border rounded" style="padding: 10px;">
+        <h3>Cadastro de categoria</h3>
         {% csrf_token %}
-        <input type="text" name="nome">
-        <select name="sessao">
-            {% for sessao in sessoes %}
-            <option value="{{sessao.id}}">{{sessao.nome}}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Salvar</button>
+        <div class="input-group" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Nome da Categoria</span>
+            </div>
+            <input type="text" class="form-control" name="nome">
+        </div>
+        <div class="input-group" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Sessão</span>
+            </div>
+            <select name="sessao" class="form-control">
+                {% for sessao in sessoes %}
+                <option value="{{sessao.id}}">{{sessao.nome}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
+    <br>
     <table class="table">
         <tr>
             <th>Categoria</th>

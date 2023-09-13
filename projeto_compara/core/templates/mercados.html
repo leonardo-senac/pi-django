@@ -11,7 +11,7 @@
 <body>
     {% block conteudo %}
     <form action="{% url 'cadastrar_mercados' %}" method="post" class="container form-perso border rounded">
-        <h2>Cadastro</h2>
+        <h3>Cadastro de Mercados</h3>
         {% csrf_token %}
         <div class="input-group" style="margin-top: 5px;">
             <div class="input-group-prepend">

@@ -24,7 +24,7 @@ def cadastro_sessoes(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         Sessão.objects.create(nome=nome)
-    return render(request, 'cadastro_sessoes.html', {'sessoes': sessoes})
+    return render(request, 'cadastro_sessoes.html', {'sessoes': sessoes, 'usuario': request.user})
 
 @login_required(login_url="/logar")
 def cadastrar_produtos(request):
@@ -38,7 +38,7 @@ def cadastrar_produtos(request):
         produto_categoria = Categoria.objects.get(id=id_categoria)
 
         Produto.objects.create(nome= nome_produto, descricao=produto_descricao, categoria=produto_categoria)
-    return render(request, 'cadastro_produto.html', {'sessoes': sessoes, 'categorias': categorias})
+    return render(request, 'cadastro_produto.html', {'sessoes': sessoes, 'categorias': categorias, 'usuario': request.user})
 
 @login_required(login_url="/logar")
 def lista_mercados(request):
@@ -61,7 +61,7 @@ def produtos_por_sessao(request, id_sessao):
         preco_produto = produtos_mercados.objects.filter(produto=produto).order_by('preco')
         precos.append(preco_produto)
     usuario = request.user
-    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
+    return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes, 'usuario': request.user})
 
 @login_required(login_url="/logar")
 def cadastrar_mercados(request):
@@ -153,7 +153,7 @@ def adicionar_categoria(request):
         nome = request.POST['nome']
         sessao = Sessão.objects.get(id=request.POST['sessao'])
         Categoria.objects.create(nome=nome, sessao=sessao)
-    return render(request, 'categoria.html', {"categorias": categorias, 'sessoes': sessoes})    
+    return render(request, 'categoria.html', {"categorias": categorias, 'sessoes': sessoes, 'usuario': request.user})    
 
 @login_required(login_url="/logar")
 def excluir_categoria(request, id_categoria):
@@ -181,7 +181,7 @@ def cadastrar_cidade(request):
     if request.method == 'POST':
         nome = request.POST['nome']
         Cidade.objects.create(nome=nome)
-    return render(request, 'cidades.html', {"cidades": cidades})
+    return render(request, 'cidades.html', {"cidades": cidades, 'usuario': request.user})
 
 @login_required(login_url="/logar")
 def excluir_cidade(request, id_cidade):

@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lista_produtos, name='lista_produtos'),
     path('cadastrar_produtos/', cadastrar_produtos, name="cadastrar_produtos"),
-    path('mercados/', lista_mercados),
+    path('mercados/', lista_mercados, name='mercados'),
     path('cadastrar_mercados/', cadastrar_mercados, name="cadastrar_mercados"),
     path('tela_precos/<int:id>', tela_precos, name="tela_precos"),
     path('adicionar_precos/<int:id>', adicionar_precos, name="adicionar_precos"),
@@ -39,6 +39,8 @@ urlpatterns = [
     path('cadastrar_cidade/', cadastrar_cidade, name="cadastrar_cidade"),
     path('excluir_cidade/<int:id_cidade>', excluir_cidade, name="excluir_cidade"),
     path('editar_cidade/<int:id_cidade>', editar_cidade, name='editar_cidade'),
-    path('editar_sessao/<int:id_sessao>', editar_sessao, name='editar_sessao')
+    path('editar_sessao/<int:id_sessao>', editar_sessao, name='editar_sessao'),
+    path('excluir_mercado/<int:id_mercado>', excluir_mercado, name="excluir_mercado"),
+    path('editar_mercado/<int:id_mercado>', editar_mercado, name="editar_mercado")
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
