@@ -8,11 +8,18 @@
 </head>
 <body>
     {% block conteudo %}
-    <form action="{% url 'cadastrar_cidade' %}" method="post">
+    <form action="{% url 'cadastrar_cidade' %}" method="post" class="border rounded" style="padding: 10px;">
+        <h3>Cadastro de Cidades</h3>
         {% csrf_token %}
-        <input type="text" name="nome">
+        <div class="input-group" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Nome da Cidade</span>
+            </div>
+            <input type="text" class="form-control" name="nome">
+        </div>
         <button class="btn btn-primary" type="submit">Salvar</button>
     </form>
+    <br>
     <table class="table">
         <tr>
             <th>Cidade</th>
