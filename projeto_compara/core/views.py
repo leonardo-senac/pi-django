@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -17,6 +18,7 @@ def lista_produtos(request):
     usuario = request.user
     return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
 
+@login_required(login_url="/logar")
 def cadastro_sessoes(request):
     sessoes = Sessão.objects.all()
     if request.method == 'POST':
@@ -24,6 +26,7 @@ def cadastro_sessoes(request):
         Sessão.objects.create(nome=nome)
     return render(request, 'cadastro_sessoes.html', {'sessoes': sessoes})
 
+@login_required(login_url="/logar")
 def cadastrar_produtos(request):
     sessoes = Sessão.objects.all()
     categorias = Categoria.objects.all()
@@ -37,6 +40,7 @@ def cadastrar_produtos(request):
         Produto.objects.create(nome= nome_produto, descricao=produto_descricao, categoria=produto_categoria)
     return render(request, 'cadastro_produto.html', {'sessoes': sessoes, 'categorias': categorias})
 
+@login_required(login_url="/logar")
 def lista_mercados(request):
     usuario = request.user
     mercados = Mercado.objects.all()
@@ -59,6 +63,7 @@ def produtos_por_sessao(request, id_sessao):
     usuario = request.user
     return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
 
+@login_required(login_url="/logar")
 def cadastrar_mercados(request):
     nome_mercado = request.POST.get('nome')
     rua_mercado = request.POST.get('rua')
@@ -72,6 +77,7 @@ def cadastrar_mercados(request):
     Mercado.objects.create(nome=nome_mercado, rua=rua_mercado, cidade=cidade_mercado, bairro=bairro_mercado,numero=numero_mercado)
     return redirect(lista_mercados)
 
+@login_required(login_url="/logar")
 def editar_mercado(request, id_mercado):
     mercado = Mercado.objects.get(id=id_mercado)
 
@@ -98,6 +104,7 @@ def tela_precos(request, id):
 
     return render(request, 'precos.html', {'produto': produto, 'mercados': mercados, 'mercados_produtos': mercados_produtos, 'precificados': precificados, 'sessoes': sessoes, 'usuario': usuario})
 
+@login_required(login_url="/logar")
 def adicionar_precos(request, id):
     mercados = Mercado.objects.all()
     produto = Produto.objects.get(id=id)
@@ -138,11 +145,7 @@ def deslogar(request):
     logout(request)
     return redirect(lista_produtos)
 
-def lista_sessoes(request):
-    # Recupere todas as sessões do banco de dados
-    sessoes = Sessão.objects.all()
-    return render(request, 'lista_sessoes.html', {'sessoes': sessoes})
-
+@login_required(login_url="/logar")
 def adicionar_categoria(request):
     categorias = Categoria.objects.all()
     sessoes = Sessão.objects.all()
@@ -152,16 +155,19 @@ def adicionar_categoria(request):
         Categoria.objects.create(nome=nome, sessao=sessao)
     return render(request, 'categoria.html', {"categorias": categorias, 'sessoes': sessoes})    
 
+@login_required(login_url="/logar")
 def excluir_categoria(request, id_categoria):
     categoria = Categoria.objects.get(id=id_categoria)
     categoria.delete()
     return redirect(adicionar_categoria)
 
+@login_required(login_url="/logar")
 def excluir_mercado(request, id_mercado):
     mercado = Mercado.objects.get(id=id_mercado)
     mercado.delete()
     return redirect(lista_mercados)
 
+@login_required(login_url="/logar")
 def excluir_sessoes(request, id_sessoes):
     sessoes =  Sessão.objects.get(id=id_sessoes)
 
@@ -169,6 +175,7 @@ def excluir_sessoes(request, id_sessoes):
 
     return redirect(cadastro_sessoes)
 
+@login_required(login_url="/logar")
 def cadastrar_cidade(request):
     cidades = Cidade.objects.all()
     if request.method == 'POST':
@@ -176,6 +183,7 @@ def cadastrar_cidade(request):
         Cidade.objects.create(nome=nome)
     return render(request, 'cidades.html', {"cidades": cidades})
 
+@login_required(login_url="/logar")
 def excluir_cidade(request, id_cidade):
     cidades =  Cidade.objects.get(id=id_cidade)
 

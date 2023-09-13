@@ -173,7 +173,7 @@
             background-color: #0056b3;
         }
 
-        .form-perso > * {
+        .form-perso>* {
             margin-bottom: 5px;
         }
     </style>
@@ -197,7 +197,6 @@
         .h1-iggor {
             text-align: center;
         }
-
     </style>
 </head>
 
@@ -288,6 +287,7 @@
                             </div>
                             <input type="text" class="form-control" name="nova_senha" id="password">
                         </div>
+                        <p id="erro" style="color: red; display: none;">Senha incompatível</p>
                         <div class="input-group" style="margin-bottom: 10px;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="">Nova Senha</span>
@@ -296,7 +296,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                            <button type="submit" class="btn btn-primary">Salvar Alteração</button>
+                            <button type="submit" class="btn btn-primary" id="submit" disabled>Salvar Alteração</button>
                         </div>
                     </form>
                 </div>
@@ -325,6 +325,34 @@
             $('#tabela_precos tbody tr:first-child').addClass('table-success')
             $('#tabela_precos tbody tr:nth-child(2)').addClass('table-success')
             $('#tabela_precos tbody tr:nth-child(3)').addClass('table-success')
+        })
+
+        const p2 = document.querySelector("#password2")
+        const p = document.querySelector("#password")
+
+        p2.addEventListener('keyup', function (e) {
+            if (e.target.value == '') {
+                document.querySelector('#submit').setAttribute('disabled', 'disabled')
+                document.querySelector('#erro').style.display = 'none'
+            }
+            else if (e.target.value == p.value) {
+                document.querySelector('#submit').removeAttribute('disabled')
+                document.querySelector('#erro').style.display = 'none'
+            } else {
+                document.querySelector('#submit').setAttribute('disabled', 'disabled')
+                document.querySelector('#erro').style.display = 'block'
+            }
+        })
+        p.addEventListener('keyup', function (e) {
+            if (e.target.value == '') {
+                document.querySelector('#submit').setAttribute('disabled', 'disabled')
+                document.querySelector('#erro').style.display = 'none'
+            }
+            else if (e.target.value == p2.value) {
+                document.querySelector('#submit').removeAttribute('disabled')
+            } else {
+                document.querySelector('#submit').setAttribute('disabled', 'disabled')
+            }
         })
     </script>
 </body>

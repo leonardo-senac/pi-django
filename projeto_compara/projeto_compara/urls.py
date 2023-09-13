@@ -29,7 +29,7 @@ urlpatterns = [
     path('tela_precos/<int:id>', tela_precos, name="tela_precos"),
     path('adicionar_precos/<int:id>', adicionar_precos, name="adicionar_precos"),
     path('cadastro/', cadastro, name='cadastro'),
-    path('logar/', logar, name="logar"),
+    path('logar', logar, name="logar"),
     path('deslogar', deslogar, name="deslogar"),
     path('produtos_por_sessao/<int:id_sessao>/', produtos_por_sessao, name='produtos_por_sessao'),
     path('adicionar_categoria/', adicionar_categoria, name="adicionar_categoria"),
@@ -38,5 +38,5 @@ urlpatterns = [
     path('excluir_sessoes/<int:id_sessoes>', excluir_sessoes, name='excluir_sessoes'),
     path('cadastrar_cidade/', cadastrar_cidade, name="cadastrar_cidade"),
     path('excluir_cidade/<int:id_cidade>', excluir_cidade, name="excluir_cidade")
-    
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
