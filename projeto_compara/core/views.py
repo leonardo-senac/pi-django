@@ -38,12 +38,13 @@ def cadastrar_produtos(request):
     return render(request, 'cadastro_produto.html', {'sessoes': sessoes, 'categorias': categorias})
 
 def lista_mercados(request):
+    usuario = request.user
     mercados = Mercado.objects.all()
     cidades = Cidade.objects.all()
     sessoes = Sessão.objects.all()
     # rua = Mercado.object.all()
     # cidade = Mercado.objects.all()
-    return render(request, 'mercados.html', {'mercados': mercados, 'cidades': cidades, 'sessoes': sessoes})
+    return render(request, 'mercados.html', {'mercados': mercados, 'cidades': cidades, 'sessoes': sessoes, 'usuario': usuario})
 
 
 def produtos_por_sessao(request, id_sessao):
@@ -58,7 +59,6 @@ def produtos_por_sessao(request, id_sessao):
     usuario = request.user
     return render(request, 'produtos.html', {'produtos': produtos, 'categorias':categorias, 'precos': precos, 'usuario': usuario, 'sessoes': sessoes})
 
-
 def cadastrar_mercados(request):
     nome_mercado = request.POST.get('nome')
     rua_mercado = request.POST.get('rua')
@@ -70,6 +70,19 @@ def cadastrar_mercados(request):
     cidade_mercado = Cidade.objects.get(id=id_cidade)
      
     Mercado.objects.create(nome=nome_mercado, rua=rua_mercado, cidade=cidade_mercado, bairro=bairro_mercado,numero=numero_mercado)
+    return redirect(lista_mercados)
+
+def editar_mercado(request, id_mercado):
+    mercado = Mercado.objects.get(id=id_mercado)
+
+    mercado.nome = request.POST.get('nome')
+    mercado.rua = request.POST.get('rua')
+    mercado.bairro = request.POST.get('bairro')
+    mercado.numero = request.POST.get('numero')
+    mercado.cidade = Cidade.objects.get(id=request.POST.get('cidade'))
+
+    mercado.save()
+
     return redirect(lista_mercados)
 
 def tela_precos(request, id):
@@ -143,6 +156,11 @@ def excluir_categoria(request, id_categoria):
     categoria = Categoria.objects.get(id=id_categoria)
     categoria.delete()
     return redirect(adicionar_categoria)
+
+def excluir_mercado(request, id_mercado):
+    mercado = Mercado.objects.get(id=id_mercado)
+    mercado.delete()
+    return redirect(lista_mercados)
 
 def excluir_sessoes(request, id_sessoes):
     sessoes =  Sessão.objects.get(id=id_sessoes)
