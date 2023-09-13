@@ -130,8 +130,6 @@ def lista_sessoes(request):
     sessoes = Sessão.objects.all()
     return render(request, 'lista_sessoes.html', {'sessoes': sessoes})
 
-
-
 def adicionar_categoria(request):
     categorias = Categoria.objects.all()
     sessoes = Sessão.objects.all()
@@ -145,9 +143,10 @@ def excluir_categoria(request, id_categoria):
     categoria = Categoria.objects.get(id=id_categoria)
     categoria.delete()
     return redirect(adicionar_categoria)
+
 def excluir_sessoes(request, id_sessoes):
-      sessoes =  Sessão.objects.get(id=id_sessoes)
+    sessoes =  Sessão.objects.get(id=id_sessoes)
 
-      sessoes.delete()
+    sessoes.delete()
 
-      return redirect(cadastro_sessoes)
+    return redirect(cadastro_sessoes)
