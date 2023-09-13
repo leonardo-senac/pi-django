@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    {% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block conteudo %}
+    <form action="{% url 'cadastrar_cidade' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="nome">
+        <button class="btn btn-primary" type="submit">Salvar</button>
+    </form>
+    <table class="table">
+        <tr>
+            <th>Cidade</th>
+            <th></th>
+        </tr>
+        {% for cidade in cidades %}
+        <tr>
+            <td>{{cidade.nome}}</td>
+            <td><a href="{% url 'excluir_cidade' cidade.id %}" class="btn btn-danger">Excluir</a></td>
+        </tr> 
+        {% endfor %}
+    </table>
+    {% endblock %} 
+</body>
+</html>

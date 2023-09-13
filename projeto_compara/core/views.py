@@ -151,3 +151,17 @@ def excluir_sessoes(request, id_sessoes):
       sessoes.delete()
 
       return redirect(cadastro_sessoes)
+
+def cadastrar_cidade(request):
+    cidades = Cidade.objects.all()
+    if request.method == 'POST':
+        nome = request.POST['nome']
+        Cidade.objects.create(nome=nome)
+    return render(request, 'cidades.html', {"cidades": cidades})
+
+def excluir_cidade(request, id_cidade):
+      cidades =  Cidade.objects.get(id=id_cidade)
+
+      cidades.delete()
+      return redirect(cadastrar_cidade)
+

@@ -50,6 +50,3 @@ class produtos_mercados(models.Model):
     
     def __str__(self):
         return f"{self.produto.nome} | {self.mercado.nome} | {self.preco} "
-    
-
- 
