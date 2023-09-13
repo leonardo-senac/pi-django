@@ -37,5 +37,6 @@ urlpatterns = [
     path('cadastro_sessoes/', cadastro_sessoes, name='cadastro_sessoes'),
     path('excluir_sessoes/<int:id_sessoes>', excluir_sessoes, name='excluir_sessoes'),
     path('cadastrar_cidade/', cadastrar_cidade, name="cadastrar_cidade"),
-   path('excluir_cidade/<int:id_cidade>', excluir_cidade, name="excluir_cidade")
+    path('excluir_cidade/<int:id_cidade>', excluir_cidade, name="excluir_cidade")
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
