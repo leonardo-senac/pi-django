@@ -189,3 +189,22 @@ def excluir_cidade(request, id_cidade):
 
     cidades.delete()
     return redirect(cadastrar_cidade)
+
+@login_required(login_url="/logar")
+def editar_cidade(request,id_cidade):
+    cidade=Cidade.objects.get(id=id_cidade)
+    cidade.nome = request.POST['nome']
+
+    cidade.save()
+
+    return redirect(cadastrar_cidade)
+
+
+@login_required(login_url="/logar")
+def editar_sessao(request,id_sessao):
+    sessao=Sessão.objects.get(id=id_sessao)
+    sessao.nome = request.POST['nome']
+
+    sessao.save()
+
+    return redirect(cadastro_sessoes)
