@@ -173,6 +173,28 @@
             background-color: #0056b3;
         }
     </style>
+    <style>
+        .class-form-body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .class-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .h1-iggor {
+            text-align: center;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -198,10 +220,13 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a href="{% url 'cadastrar_produtos' %}" class="dropdown-item" >Adicionar Produto</a>
-                <a href="{% url 'adicionar_categoria' %}" class="dropdown-item" >Menu Categorias</a>
+                <a href="{% url 'cadastrar_produtos' %}" class="dropdown-item">Adicionar Produto</a>
+                <a href="{% url 'adicionar_categoria' %}" class="dropdown-item">Menu Categorias</a>
                 <a href="{% url 'cadastro_sessoes' %}" class="dropdown-item">Menu Sessões</a>
-    <div class="dropdown-divider"></div>
+                <div class="dropdown-divider"></div>
+                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
+                    Alterar Senha
+                </button>
                 <a href="{% url 'deslogar' %}" class="dropdown-item">Deslogar</a>
             </div>
         </div>
@@ -230,6 +255,47 @@
             <div class="col py-3">
                 {% block conteudo %}
                 {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Senha</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h1 class="h1-iggor">Trocar Senha</h1>
+                    <form>
+                        <div class="input-group" style="margin-bottom: 10px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="">Senha Atual</span>
+                            </div>
+                            <input type="text" class="form-control" name="senha_atual">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 10px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="">Nova Senha</span>
+                            </div>
+                            <input type="text" class="form-control" name="nova_senha" id="password">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 10px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="">Nova Senha</span>
+                            </div>
+                            <input type="text" class="form-control" name="nova_senha2" id="password2">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                            <button type="submit" class="btn btn-primary">Salvar Alteração</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
