@@ -51,7 +51,12 @@
                         <div class="modal-body">
                             <form action="{% url 'editar_sessao' sessao.id %}" method="post">
                                 {% csrf_token %}
-                                <input type="text" name="nome" value="{{sessao.nome}}">
+                                <div class="input-group" style="margin-top: 5px; margin-bottom: 5px;">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">Nome da Sessão</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="nome" value="{{sessao.nome}}">
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                     <button type="submit" class="btn btn-primary">Salvar</button>

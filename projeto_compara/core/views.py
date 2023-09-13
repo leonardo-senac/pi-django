@@ -181,7 +181,7 @@ def cadastrar_cidade(request):
     if request.method == 'POST':
         nome = request.POST['nome']
         Cidade.objects.create(nome=nome)
-    return render(request, 'cidades.html', {"cidades": cidades, 'usuario': request.user})
+    return render(request, 'cidades.html', {"cidades": cidades, 'usuario': request.user, 'sessoes': Sessão.objects.all()})
 
 @login_required(login_url="/logar")
 def excluir_cidade(request, id_cidade):
