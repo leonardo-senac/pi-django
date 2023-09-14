@@ -15,7 +15,7 @@
         <div class="row">
             {% for produto in produtos %}
             <div class="produtos card bg-light" style="height: 500px;">
-                <img class="card-img-top" src="{{produto.imagem.url}}" alt="Imagem de {{produto.nome}}">
+                <img class="card-img-top" src="{{produto.imagem.url}}" alt="Imagem de {{produto.nome}}" style="margin-top: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">{{produto.nome}}</h5>
                     {% if produto.descricao != None %}

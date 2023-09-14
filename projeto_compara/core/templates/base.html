@@ -218,19 +218,19 @@
             </div>
         </div>
         {% else %}
-        <a href="{% url 'logar' %}" class="btn btn-botao-cor-especial">Logar</a>
+        <a href="{% url 'logar' %}" class="btn btn-light">Logar</a>
         {% endif %}
     </nav>
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #d8ffff; padding: 0%;">
-                <div class="">
+                <div class=" flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
 
                     <ul class="nav nav-pills flex-column"
                         id="menu">
                         {% for sessao in sessoes %}
-                        <li class="nav-item">
-                            <a href="{% url 'produtos_por_sessao' sessao.id %}" class="nav-link align-middle px-0 hover text-secondary">
+                        <li class="nav-item hover">
+                            <a href="{% url 'produtos_por_sessao' sessao.id %}" class="nav-link align-middle px-0 text-secondary" style="margin-left: 5px;">
                                 {{sessao.nome}}
                             </a>
                         </li>
