@@ -37,12 +37,64 @@
             <th>Categoria</th>
             <th>Sessão</th>
             <th></th>
+            <th></th>
         </tr>
         {% for categoria in categorias %}
         <tr>
             <td>{{categoria.nome}}</td>
             <td>{{categoria.sessao}}</td>
             <td><a href="{% url 'excluir_categoria' categoria.id %}" class="btn btn-danger">Excluir</a></td>
+            <td><!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{categoria.id}}">
+                    Editar
+                </button>
+            </td>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal{{categoria.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{categoria.nome}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'editar_categoria' categoria.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="input-group" style="margin-top: 5px; margin-bottom: 5px;">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">Nome da Categoria</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="nome" value="{{categoria.nome}}">
+                                </div>
+                                <div class="form-row" style="margin-bottom: 5px;">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="">Sessão</span>
+                                        </div>
+                                        <select name="sessao" class="form-control">
+                                            {% for sessao in sessoes %}
+                                            {% if sessao == categoria.sessao %}
+                                            <option value="{{sessao.id}}" selected>{{sessao.nome}}</option>
+                                            {% else %}
+                                            <option value="{{sessao.id}}">{{sessao.nome}}</option>
+                                            {% endif %}
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </tr>
         {% endfor %}

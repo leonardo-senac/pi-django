@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import *
+from .forms import Imagem
 
 # Create your views here.
 
@@ -31,15 +32,21 @@ def cadastro_sessoes(request):
 def cadastrar_produtos(request):
     sessoes = Sessão.objects.all()
     categorias = Categoria.objects.all()
+    form = Imagem()
     if request.method == 'POST':
-        nome_produto = request.POST.get('nome')
-        produto_descricao = request.POST.get('descricao')
-        id_categoria = request.POST.get('categoria')
+        form = Imagem(request.POST, request.FILES)
+        if form.is_valid():
+            print('aqui')
+            nome_produto = request.POST.get('nome')
+            produto_descricao = request.POST.get('descricao')
+            id_categoria = request.POST.get('categoria')
+            imagem = form.cleaned_data.get("imagem")
 
-        produto_categoria = Categoria.objects.get(id=id_categoria)
+            produto_categoria = Categoria.objects.get(id=id_categoria)
 
-        Produto.objects.create(nome= nome_produto, descricao=produto_descricao, categoria=produto_categoria)
-    return render(request, 'cadastro_produto.html', {'sessoes': sessoes, 'categorias': categorias, 'usuario': request.user})
+            Produto.objects.create(nome= nome_produto, descricao=produto_descricao, categoria=produto_categoria, imagem=imagem)
+        print(form.errors.as_data())
+    return render(request, 'cadastro_produto.html', {'sessoes': sessoes, 'categorias': categorias, 'usuario': request.user, 'form': form})
 
 @login_required(login_url="/logar")
 def lista_mercados(request):
@@ -209,6 +216,16 @@ def editar_sessao(request,id_sessao):
     sessao.save()
 
     return redirect(cadastro_sessoes)
+
+@login_required(login_url="/logar")
+def editar_categoria(request, id_categoria):
+    categoria=Categoria.objects.get(id=id_categoria)
+    categoria.nome = request.POST['nome']
+    categoria.sessao = Sessão.objects.get(id=request.POST['sessao'])
+
+    categoria.save()
+
+    return redirect(adicionar_categoria)
 
 def mudar_senha(request):
     usuario = User.objects.get(id=request.user.id)

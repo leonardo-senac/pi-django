@@ -42,6 +42,7 @@ urlpatterns = [
     path('editar_cidade/<int:id_cidade>', editar_cidade, name='editar_cidade'),
     path('editar_sessao/<int:id_sessao>', editar_sessao, name='editar_sessao'),
     path('excluir_mercado/<int:id_mercado>', excluir_mercado, name="excluir_mercado"),
-    path('editar_mercado/<int:id_mercado>', editar_mercado, name="editar_mercado")
+    path('editar_mercado/<int:id_mercado>', editar_mercado, name="editar_mercado"),
+    path('editar_categoria/<int:id_categoria>', editar_categoria, name="editar_categoria"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
