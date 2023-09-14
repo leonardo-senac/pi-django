@@ -31,6 +31,7 @@ urlpatterns = [
     path('cadastro/', cadastro, name='cadastro'),
     path('logar', logar, name="logar"),
     path('deslogar', deslogar, name="deslogar"),
+    path('mudar_senha', mudar_senha, name='mudar_senha'),
     path('produtos_por_sessao/<int:id_sessao>/', produtos_por_sessao, name='produtos_por_sessao'),
     path('adicionar_categoria/', adicionar_categoria, name="adicionar_categoria"),
     path('excluir_categoria/<int:id_categoria>/', excluir_categoria, name="excluir_categoria"),

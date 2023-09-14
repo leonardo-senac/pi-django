@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import *
 
 # Create your views here.
 
@@ -208,3 +209,13 @@ def editar_sessao(request,id_sessao):
     sessao.save()
 
     return redirect(cadastro_sessoes)
+
+def mudar_senha(request):
+    usuario = User.objects.get(id=request.user.id)
+    if usuario.check_password(request.POST['senha_antiga']):
+        usuario.password = make_password(request.POST['nova_senha'])
+        usuario.save()
+        alert = 'Senha alterada com sucesso!'
+    else:
+        alert = 'Erro na senha atual!'
+    return redirect(lista_produtos)

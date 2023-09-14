@@ -20,21 +20,6 @@
         crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        /* Estilize os botões */
-        .btn-botao-cor-especial {
-            background-color: darkred;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-botao-cor-especial:hover {
-            background-color: #990000;
-            color: white;
-            /* Tom mais escuro para realçar o hover */
-        }
 
         /* Estilize a modal */
         .modal-content {
@@ -48,13 +33,6 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-title {
-            color: darkred;
-            font-family: 'Geneva', sans-serif;
-            font-size: 24px;
-            margin-bottom: 15px;
         }
 
         /* Estilize a tabela de preços */
@@ -201,12 +179,11 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <a href="{% url 'lista_produtos' %}"><img src="../../imagens_mercados/thumbnail_Logo Compara preços (1).png"
+                style="width: 120px;" alt="Logo do site"></a>
+
         <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
-                aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
             <div class="collapse navbar-collapse" id="navbarsExample07">
                 <form class="form-inline my-2 my-md-0">
@@ -217,12 +194,14 @@
         </div>
         {% if usuario.is_authenticated %}
         <div class="dropdown">
-            <a class="btn btn-botao-cor-especial dropdown-toggle" style="margin-left: 10px;" href="#" role="button"
+            <a class="btn btn-light dropdown-toggle" style="margin-left: 10px;" href="#" role="button"
                 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Menu do usuário
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item">{{usuario.username}}</a>
+                <div class="dropdown-divider"></div>
                 <a href="{% url 'cadastrar_produtos' %}" class="dropdown-item">Adicionar Produto</a>
                 <a href="{% url 'cadastro_sessoes' %}" class="dropdown-item">Menu Sessões</a>
                 <a href="{% url 'adicionar_categoria' %}" class="dropdown-item">Menu Categorias</a>
@@ -241,7 +220,7 @@
     </nav>
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #d8ffff;">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
 
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -249,7 +228,7 @@
                         {% for sessao in sessoes %}
                         <li class="nav-item">
                             <a href="{% url 'produtos_por_sessao' sessao.id %}" class="nav-link align-middle px-0">
-                                <span class="ms-1 d-none d-sm-inline">{{sessao.nome}}</span>
+                                <span class="ms-1 d-none d-sm-inline text-secondary">{{sessao.nome}}</span>
                             </a>
                         </li>
                         {% endfor %}
@@ -276,25 +255,26 @@
                 </div>
                 <div class="modal-body">
                     <h1 class="h1-iggor">Trocar Senha</h1>
-                    <form>
+                    <form action="{% url 'mudar_senha' %}" method="post">
+                        {% csrf_token %}
                         <div class="input-group" style="margin-bottom: 10px;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="">Senha Atual</span>
                             </div>
-                            <input type="text" class="form-control" name="senha_atual">
+                            <input type="password" class="form-control" name="senha_antiga" id="old_pass">
                         </div>
                         <div class="input-group" style="margin-bottom: 10px;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="">Nova Senha</span>
                             </div>
-                            <input type="text" class="form-control" name="nova_senha" id="password">
+                            <input type="password" class="form-control" name="nova_senha" id="password">
                         </div>
                         <p id="erro" style="color: red; display: none;">Senha incompatível</p>
                         <div class="input-group" style="margin-bottom: 10px;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="">Nova Senha</span>
                             </div>
-                            <input type="text" class="form-control" name="nova_senha2" id="password2">
+                            <input type="password" class="form-control" name="nova_senha2" id="password2">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
