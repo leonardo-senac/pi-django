@@ -44,5 +44,7 @@ urlpatterns = [
     path('excluir_mercado/<int:id_mercado>', excluir_mercado, name="excluir_mercado"),
     path('editar_mercado/<int:id_mercado>', editar_mercado, name="editar_mercado"),
     path('editar_categoria/<int:id_categoria>', editar_categoria, name="editar_categoria"),
+    path('tela_autorizacao/', tela_autorizacao, name='tela_autorizacao'),
+    path('autorizar_desautorizar/<int:id_usuario>', autorizar_desautorizar, name='autorizar_desautorizar')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

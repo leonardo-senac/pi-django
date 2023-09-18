@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h3>Não autorizados</h3>
+<table class="table">
+    <tr>
+        <th>Nome</th>
+        <th></th>
+    </tr>
+    {% for usuario in usuarios %}
+    <tr>
+        <td>{{usuario.username}}</td>
+        <td><a href="{% url 'autorizar_desautorizar' usuario.id %}" class="btn btn-info">Autorizar</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<hr>
+<h3>Autorizados</h3>
+<table class="table">
+    <tr>
+        <th>Nome</th>
+        <th></th>
+    </tr>
+    {% for usuario in autorizados %}
+    <tr>
+        <td>{{usuario.username}}</td>
+        <td><a href="{% url 'autorizar_desautorizar' usuario.id %}" class="btn btn-info">Desautorizar</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
