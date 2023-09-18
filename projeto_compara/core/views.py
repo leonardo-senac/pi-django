@@ -131,8 +131,9 @@ def cadastro(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        User.objects.create_user(username=username, password=password)
-        return redirect('cadastro')
+        usuario = User.objects.create_user(username=username, password=password)
+        Colaborador.objects.create(ativo=False, usuario=usuario)
+        return redirect('logar')
     return render(request, 'cadastro.html')
 
 def logar(request):
@@ -140,11 +141,11 @@ def logar(request):
         username = request.POST["username"]
         password = request.POST["password"]
         usuario = authenticate(request, username=username, password=password)
-        if usuario is not None:
-            login(request, usuario)
-            return redirect(lista_produtos)
-        else:
-            form_login = AuthenticationForm()
+        form_login = AuthenticationForm()
+        if usuario.colaborador.ativo == 1:
+            if usuario is not None:
+                login(request, usuario)
+                return redirect(lista_produtos)
     else:
         form_login = AuthenticationForm()
     return render(request, 'login.html', {'form_login': form_login})
@@ -232,7 +233,27 @@ def mudar_senha(request):
     if usuario.check_password(request.POST['senha_antiga']):
         usuario.password = make_password(request.POST['nova_senha'])
         usuario.save()
-        alert = 'Senha alterada com sucesso!'
-    else:
-        alert = 'Erro na senha atual!'
     return redirect(lista_produtos)
+
+@login_required(login_url="/logar")
+def tela_autorizacao(request):
+    sessoes = Sessão.objects.all()
+    usuario = request.user
+    usuarios = User.objects.filter(colaborador__ativo=0).exclude(id=1)
+    autorizados = User.objects.filter(colaborador__ativo=1).exclude(id=1)
+
+    return render(request, 'autorizacoes.html', {'sessoes': sessoes ,'usuario': usuario,'usuarios': usuarios, 'autorizados': autorizados})
+
+@login_required(login_url="/logar")
+def autorizar_desautorizar(request, id_usuario):
+    usuario = User.objects.get(id=id_usuario)
+
+    if usuario.colaborador.ativo == 1:
+        usuario.colaborador.ativo = 0
+        usuario.colaborador.save()
+        if usuario == request.user: return redirect(deslogar)
+    else:
+        usuario.colaborador.ativo = 1
+        usuario.colaborador.save()
+
+    return redirect(tela_autorizacao)

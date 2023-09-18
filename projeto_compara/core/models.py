@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -50,3 +51,7 @@ class produtos_mercados(models.Model):
     
     def __str__(self):
         return f"{self.produto.nome} | {self.mercado.nome} | {self.preco} "
+    
+class Colaborador(models.Model):
+    ativo = models.BooleanField()
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='colaborador')
